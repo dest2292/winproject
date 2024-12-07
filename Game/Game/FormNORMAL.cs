@@ -13,96 +13,185 @@ namespace Game
     public partial class FormNORMAL : Form
     {
         private Form1 mainForm;
-        private List<PictureBox> bullets = new List<PictureBox>(); // 여러 개의 총알 관리
-        private Timer bulletTimer; // 총알 이동 타이머
-        private Timer scoreTimer; // 점수 타이머
-        private int bulletSpeed = 8; // 총알 속도
-        private int bulletCount = 10; // 총알 개수
-        private int score = 0; // 점수 (초 단위)
-        private int playerSpeed = 10; // 캐릭터 이동 속도
         private bool isGameOver = false;
+        private int score = 0; // 점수 (초 단위)
+
+        private Bitmap playerImage;
+        private Point playerPosition;
+        private Size playerSize = new Size(74, 79);
+
+        private List<Bullet> bullets; // Bullet 리스트
+        private Random random;
+
+        private int index = 0;
 
         public FormNORMAL(Form1 mainForm)
         {
             InitializeComponent();
             this.mainForm = mainForm;
-            player.BackColor = Color.Transparent; // 플레이어의 배경을 투명하게 설정
-            bullet.BackColor = Color.Transparent; // 총알의 배경을 투명하게 설정
-            this.DoubleBuffered = true; // 더블버퍼
 
-            bullet.Visible = false; // 원본 PictureBox 숨기기
-            InitializeBullets(); // 총알 초기화
-            InitializeTimers(); // 타이머 초기화
+            InitializeGame();
         }
 
-        private void InitializeBullets()
+        private void InitializeGame()
         {
-            Random rand = new Random();
+            // 리소스에서 Player 이미지 로드
+            playerImage = new Bitmap(Properties.Resources.player);
+            playerImage = new Bitmap(playerImage, playerSize); // 크기 조정
+            playerPosition = new Point(307, 280);
 
-            for (int i = 0; i < bulletCount; i++)
+            // Bullet 리스트 초기화
+            bullets = new List<Bullet>();
+            random = new Random();
+
+            this.DoubleBuffered = true; // 화면 깜빡임 방지
+
+            // 초기 Bullet 추가
+            AddBullet();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            GameOver(); // GameOver 호출
+        }
+
+        private void gameTimer_Tick(object sender, EventArgs e)
+        {
+            // Bullet 이동
+            for (int i = 0; i < bullets.Count; i++)
             {
-                // 기존 bullet PictureBox를 복제하여 여러 개 생성
-                PictureBox newBullet = new PictureBox
+                bullets[i].Move();
+
+                // Bullet이 화면 아래로 벗어나면 삭제
+                if (bullets[i].Position.Y > this.ClientSize.Height)
                 {
-                    Size = bullet.Size, // 기존 bullet 크기 사용
-                    Image = bullet.Image, // 총알 이미지 설정
-                    SizeMode = bullet.SizeMode, // 이미지 맞춤
-                    Top = rand.Next(-500, -50), // 랜덤 위치에서 시작
-                    Left = rand.Next(0, this.ClientSize.Width - bullet.Width),
-                    BackColor = Color.Transparent
-                };
-
-                bullets.Add(newBullet); // 리스트에 추가
-                this.Controls.Add(newBullet); // 폼에 추가
+                    bullets.RemoveAt(i);
+                    i--;
+                }
             }
-            Console.WriteLine($"생성된 총알 개수: {bullets.Count}");
-        }
 
-        private void InitializeTimers()
-        {
-            // 총알 이동 타이머
-            bulletTimer = new Timer
+            // 새로운 Bullet 주기적으로 생성
+            if (random.Next(0, 10) < 2) // 약 20% 확률로 생성
             {
-                Interval = 50 // 총알 이동 간격 (ms)
-            };
-            bulletTimer.Tick += BulletTimer_Tick;
-            bulletTimer.Start();
+                AddBullet();
+            }
 
-            Console.WriteLine("타이머 시작");
-            // 점수 타이머
-            scoreTimer = new Timer
-            {
-                Interval = 1000 // 1초마다 점수 증가
-            };
-            scoreTimer.Tick += ScoreTimer_Tick;
-            scoreTimer.Start();
-        }
-
-        private void BulletTimer_Tick(object sender, EventArgs e)
-        {
-            Console.WriteLine("BulletTimer_Tick 호출됨");
-
+            // 충돌 감지
             foreach (var bullet in bullets)
             {
-                // 총알 이동
-                bullet.Top += bulletSpeed;
-
-                // 총알이 화면 아래로 벗어나면 다시 위로 초기화
-                if (bullet.Top > this.ClientSize.Height)
-                {
-                    bullet.Top = -50; // 랜덤 위치에서 다시 시작
-                    bullet.Left = new Random().Next(0, this.ClientSize.Width - bullet.Width);
-                    Console.WriteLine($"Bullet reset: {bullet.Left}, {bullet.Top}");
-                }
-
-                // 충돌 감지
-                if (!isGameOver && player.Bounds.IntersectsWith(bullet.Bounds))
+                if (IsPixelPerfectCollision(playerImage, new Rectangle(playerPosition, playerSize), bullet.Image, bullet.GetBounds()))
                 {
                     GameOver();
                     return;
                 }
             }
+
+            // 화면 다시 그리기
+            this.Invalidate();
         }
+
+        private void AddBullet()
+        {
+            // Bullet 생성
+            Bitmap bulletImage = new Bitmap(Properties.Resources.bullet);
+            bulletImage = new Bitmap(bulletImage, new Size(15, 40)); // 크기 조정
+            Point position = new Point(random.Next(0, this.ClientSize.Width - bulletImage.Width), 0); // 랜덤 위치
+            int speed = random.Next(5, 10); // 랜덤 속도
+
+            bullets.Add(new Bullet(position, bulletImage.Size, speed, bulletImage));
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+
+            // Player 그리기
+            DrawImageWithoutTransparency(e.Graphics, playerImage, playerPosition);
+
+            // Bullet 그리기
+            foreach (var bullet in bullets)
+            {
+                DrawImageWithoutTransparency(e.Graphics, bullet.Image, bullet.Position);
+            }
+        }
+
+        private void DrawImageWithoutTransparency(Graphics g, Bitmap image, Point position)
+        {
+            for (int y = 0; y < image.Height; y++)
+            {
+                for (int x = 0; x < image.Width; x++)
+                {
+                    Color pixelColor = image.GetPixel(x, y);
+                    if (pixelColor.A > 0) // 투명하지 않은 픽셀만 그림
+                    {
+                        using (Brush brush = new SolidBrush(pixelColor))
+                        {
+                            g.FillRectangle(brush, position.X + x, position.Y + y, 1, 1);
+                        }
+                    }
+                }
+            }
+        }
+
+        private bool IsPixelPerfectCollision(Bitmap bmp1, Rectangle rect1, Bitmap bmp2, Rectangle rect2)
+        {
+            Rectangle intersect = Rectangle.Intersect(rect1, rect2);
+
+            if (intersect.IsEmpty) return false;
+
+            for (int y = intersect.Top; y < intersect.Bottom; y++)
+            {
+                for (int x = intersect.Left; x < intersect.Right; x++)
+                {
+                    int bmp1X = x - rect1.Left;
+                    int bmp1Y = y - rect1.Top;
+                    int bmp2X = x - rect2.Left;
+                    int bmp2Y = y - rect2.Top;
+
+                    Color color1 = bmp1.GetPixel(bmp1X, bmp1Y);
+                    Color color2 = bmp2.GetPixel(bmp2X, bmp2Y);
+
+                    if (color1.A > 0 && color2.A > 0)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        private void GameOver()
+        {
+            if (isGameOver) return; // 중복 호출 방지
+            isGameOver = true;
+
+            gameTimer.Stop();
+            ScoreTimer.Stop();
+
+            MessageBox.Show($"점수: {score}초", "게임 오버! ");
+            mainForm.Show(); // 메인 폼 다시 표시
+            this.Close(); // 현재 폼 닫기
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            const int playerSpeed = 10;
+
+            if (keyData == Keys.Left && playerPosition.X > 0)
+            {
+                playerPosition.X -= playerSpeed;
+            }
+            else if (keyData == Keys.Right && playerPosition.X < this.ClientSize.Width - playerSize.Width)
+            {
+                playerPosition.X += playerSpeed;
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
+            // 화면 다시 그리기
+            this.Invalidate();
+        }
+
         private void ScoreTimer_Tick(object sender, EventArgs e)
         {
             if (!isGameOver)
@@ -111,35 +200,34 @@ namespace Game
                 this.Text = $"점수: {score}초"; // 점수를 폼 제목에 표시
             }
         }
-        private void GameOver()
-        {
-            if (isGameOver) return; // 중복 호출 방지
-            isGameOver = true;
+    }
+}
 
-            bulletTimer.Stop(); // 총알 타이머 중지
-            scoreTimer.Stop(); // 점수 타이머 중지
+// Bullet 클래스
+public class Bullet
+{
+    public Point Position { get; set; }
+    public Size Size { get; set; }
+    public int Speed { get; set; }
+    public Bitmap Image { get; set; }
 
-            MessageBox.Show($"게임 오버! 당신의 점수: {score}초", "게임 종료");
-            mainForm.Show(); // 메인 폼 다시 표시
-            this.Close(); // 현재 폼 닫기
-        }
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        {
-            if (keyData == Keys.Left && player.Left > 0)
-            {
-                player.Left -= playerSpeed; // 왼쪽 이동
-            }
-            else if (keyData == Keys.Right && player.Right < this.ClientSize.Width)
-            {
-                player.Left += playerSpeed; // 오른쪽 이동
-            }
+    public Bullet(Point position, Size size, int speed, Bitmap image)
+    {
+        Position = position;
+        Size = size;
+        Speed = speed;
+        Image = image;
+    }
 
-            return base.ProcessCmdKey(ref msg, keyData);
-        }
+    // Bullet 움직임
+    public void Move()
+    {
+        Position = new Point(Position.X, Position.Y + Speed);
+    }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            GameOver(); // GameOver 호출
-        }
+    // 충돌 영역 반환
+    public Rectangle GetBounds()
+    {
+        return new Rectangle(Position, Size);
     }
 }
