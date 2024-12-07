@@ -30,8 +30,8 @@ namespace test
             this.Size = new Size(400, 600);
 
             // 이미지 로드
-            playerImage = new Bitmap(@"C:\Users\김민석\Desktop\player.png"); // 경로 변경
-            bulletImage = new Bitmap(@"C:\Users\김민석\Desktop\bullet.png"); // 경로 변경
+            playerImage = new Bitmap(Properties.Resources.player);
+            bulletImage = new Bitmap(Properties.Resources.bullet);
 
             // 초기 위치 설정
             playerPosition = new Point(175, 500); // 화면 하단
