@@ -1,0 +1,13 @@
+C:\Users\aaaa2\Desktop\winproject\Game\Game\bin\Debug\Game.exe.config
+C:\Users\aaaa2\Desktop\winproject\Game\Game\bin\Debug\Game.exe
+C:\Users\aaaa2\Desktop\winproject\Game\Game\bin\Debug\Game.pdb
+C:\Users\aaaa2\Desktop\winproject\Game\Game\obj\Debug\Game.csproj.AssemblyReference.cache
+C:\Users\aaaa2\Desktop\winproject\Game\Game\obj\Debug\Game.Form1.resources
+C:\Users\aaaa2\Desktop\winproject\Game\Game\obj\Debug\Game.FormEASY.resources
+C:\Users\aaaa2\Desktop\winproject\Game\Game\obj\Debug\Game.FormHARD.resources
+C:\Users\aaaa2\Desktop\winproject\Game\Game\obj\Debug\Game.FormNORMAL.resources
+C:\Users\aaaa2\Desktop\winproject\Game\Game\obj\Debug\Game.Properties.Resources.resources
+C:\Users\aaaa2\Desktop\winproject\Game\Game\obj\Debug\Game.csproj.GenerateResource.cache
+C:\Users\aaaa2\Desktop\winproject\Game\Game\obj\Debug\Game.csproj.CoreCompileInputs.cache
+C:\Users\aaaa2\Desktop\winproject\Game\Game\obj\Debug\Game.exe
+C:\Users\aaaa2\Desktop\winproject\Game\Game\obj\Debug\Game.pdb

@@ -29,27 +29,14 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.comboBoxLEVEL = new System.Windows.Forms.ComboBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.HARD = new System.Windows.Forms.RadioButton();
+            this.NORMAL = new System.Windows.Forms.RadioButton();
+            this.EASY = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
-            // 
-            // comboBoxLEVEL
-            // 
-            this.comboBoxLEVEL.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.comboBoxLEVEL.FormattingEnabled = true;
-            this.comboBoxLEVEL.Items.AddRange(new object[] {
-            "ＥＡＳＹ",
-            "ＮＯＲＭＡＬ",
-            "ＨＡＲＤ"});
-            this.comboBoxLEVEL.Location = new System.Drawing.Point(79, 219);
-            this.comboBoxLEVEL.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.comboBoxLEVEL.Name = "comboBoxLEVEL";
-            this.comboBoxLEVEL.Size = new System.Drawing.Size(88, 20);
-            this.comboBoxLEVEL.TabIndex = 10;
-            this.comboBoxLEVEL.Text = "LEVEL";
             // 
             // textBox2
             // 
@@ -106,6 +93,48 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
+            // HARD
+            // 
+            this.HARD.AutoSize = true;
+            this.HARD.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.HARD.Font = new System.Drawing.Font("휴먼둥근헤드라인", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.HARD.Location = new System.Drawing.Point(179, 215);
+            this.HARD.Name = "HARD";
+            this.HARD.Size = new System.Drawing.Size(67, 16);
+            this.HARD.TabIndex = 15;
+            this.HARD.TabStop = true;
+            this.HARD.Text = "HARD";
+            this.HARD.UseVisualStyleBackColor = false;
+            // 
+            // NORMAL
+            // 
+            this.NORMAL.AutoSize = true;
+            this.NORMAL.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.NORMAL.Font = new System.Drawing.Font("휴먼둥근헤드라인", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.NORMAL.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.NORMAL.Location = new System.Drawing.Point(84, 215);
+            this.NORMAL.Name = "NORMAL";
+            this.NORMAL.Size = new System.Drawing.Size(89, 16);
+            this.NORMAL.TabIndex = 14;
+            this.NORMAL.TabStop = true;
+            this.NORMAL.Text = "NORMAL";
+            this.NORMAL.UseVisualStyleBackColor = false;
+            // 
+            // EASY
+            // 
+            this.EASY.AutoSize = true;
+            this.EASY.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.EASY.Cursor = System.Windows.Forms.Cursors.Default;
+            this.EASY.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.EASY.Font = new System.Drawing.Font("휴먼둥근헤드라인", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.EASY.Location = new System.Drawing.Point(14, 215);
+            this.EASY.Name = "EASY";
+            this.EASY.Size = new System.Drawing.Size(63, 16);
+            this.EASY.TabIndex = 13;
+            this.EASY.TabStop = true;
+            this.EASY.Text = "EASY";
+            this.EASY.UseVisualStyleBackColor = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -113,9 +142,11 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(258, 360);
+            this.Controls.Add(this.HARD);
+            this.Controls.Add(this.NORMAL);
+            this.Controls.Add(this.EASY);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.comboBoxLEVEL);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
             this.Name = "Form1";
@@ -126,12 +157,13 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ComboBox comboBoxLEVEL;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.RadioButton HARD;
+        private System.Windows.Forms.RadioButton NORMAL;
+        private System.Windows.Forms.RadioButton EASY;
     }
 }
 

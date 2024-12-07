@@ -15,46 +15,40 @@ namespace Game
         public Form1()
         {
             InitializeComponent();
-            InitializeComboBoxItems();
+            this.FormBorderStyle = FormBorderStyle.FixedSingle; // 크기 조정 비활성화
+            this.MaximizeBox = false; // 최대화 버튼 비활성화
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
-        private void InitializeComboBoxItems()
-        {
-            // ComboBox에 레벨 항목을 추가
-            comboBoxLEVEL.Items.Clear();
-            comboBoxLEVEL.Items.Add("EASY");
-            comboBoxLEVEL.Items.Add("NORMAL");
-            comboBoxLEVEL.Items.Add("HARD");
-            comboBoxLEVEL.SelectedIndex = 0; // 기본 선택값 설정
-        }
+        int selectedLEVEL = 0;
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            string selectedLEVEL = comboBoxLEVEL.SelectedItem.ToString();
+            Form gameForm = null;
 
-            // 난이도에 따라 다른 폼 열기
-            Form gameForm;
+            // 라디오 버튼 선택에 따라 난이도 결정
+            if (EASY.Checked)
+            {
+                gameForm = new FormEASY(this);
+            }
+            else if (NORMAL.Checked)
+            {
+                gameForm = new FormNORMAL(this);
+            }
+            else if (HARD.Checked)
+            {
+                gameForm = new FormHARD(this);
+            }
+            else
+            {
+                MessageBox.Show("난이도를 선택해주세요!", "알림", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-            if (selectedLEVEL == "EASY")
-            {
-                gameForm = new FormEASY();
-            }
-            else if (selectedLEVEL == "NORMAL")
-            {
-                gameForm = new FormNORMAL();
-            }
-            else // "어려움"
-            {
-                gameForm = new FormHARD();
-            }
-            if (gameForm != null)
-            {
-                gameForm.Show();
-                this.Hide(); // 현재 폼 숨기기
-                             // 선택된 폼을 모달로 표시
-                gameForm.Show();
-                this.Hide(); // 현재 폼 숨기기 (선택 사항)
-            }
+            // 게임 시작
+            gameForm.FormClosed += (s, args) => this.Show(); // 게임 종료 시 메인 폼 다시 표시
+            gameForm.Show();
+            this.Hide();
         }
 
         private void button2_Click(object sender, EventArgs e)
