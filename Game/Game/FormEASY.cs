@@ -146,8 +146,7 @@ namespace Game
 
         private void button1_Click(object sender, EventArgs e)
         {
-            mainForm.Show(); // 메인 폼 다시 표시
-            this.Close();
+            GameOver(); // GameOver 호출
         }
     }
 }
