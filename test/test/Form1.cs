@@ -13,10 +13,12 @@ namespace test
     public partial class Form1 : Form
     {
         private Bitmap playerImage;
-        private Bitmap bulletImage;
         private Point playerPosition;
-        private Point bulletPosition;
+        private Size playerSize = new Size(74, 79);
+
+        private List<Bullet> bullets; // Bullet 리스트
         private Timer gameTimer;
+        private Random random;
 
         public Form1()
         {
@@ -26,52 +28,74 @@ namespace test
 
         private void InitializeGame()
         {
-            this.Text = "Transparent Overlap Fix";
-            this.Size = new Size(400, 600);
-
-            // 이미지 로드
+            // 리소스에서 Player 이미지 로드
             playerImage = new Bitmap(Properties.Resources.player);
-            bulletImage = new Bitmap(Properties.Resources.bullet);
+            playerImage = new Bitmap(playerImage, playerSize); // 크기 조정
+            playerPosition = new Point(307, 280);
 
-            // 초기 위치 설정
-            playerPosition = new Point(175, 500); // 화면 하단
-            bulletPosition = new Point(190, 0);   // 화면 상단
+            // Bullet 리스트 초기화
+            bullets = new List<Bullet>();
+            random = new Random();
 
             // Timer 설정
-            gameTimer = new Timer
-            {
-                Interval = 50
-            };
+            gameTimer = new Timer { Interval = 50 };
             gameTimer.Tick += GameTimer_Tick;
             gameTimer.Start();
 
             // 키보드 입력 설정
             this.KeyDown += Form1_KeyDown;
             this.DoubleBuffered = true; // 화면 깜빡임 방지
+
+            // 초기 Bullet 추가
+            AddBullet();
         }
 
         private void GameTimer_Tick(object sender, EventArgs e)
         {
-            // Bullet 움직임
-            bulletPosition.Y += 5;
-
-            // Bullet이 화면 아래로 벗어나면 다시 위로 초기화
-            if (bulletPosition.Y > this.ClientSize.Height)
+            // Bullet 이동
+            for (int i = 0; i < bullets.Count; i++)
             {
-                bulletPosition.Y = 0;
-                bulletPosition.X = new Random().Next(0, this.ClientSize.Width - bulletImage.Width);
+                bullets[i].Move();
+
+                // Bullet이 화면 아래로 벗어나면 삭제
+                if (bullets[i].Position.Y > this.ClientSize.Height)
+                {
+                    bullets.RemoveAt(i);
+                    i--;
+                }
+            }
+
+            // 새로운 Bullet 주기적으로 생성
+            if (random.Next(0, 10) < 2) // 약 20% 확률로 생성
+            {
+                AddBullet();
             }
 
             // 충돌 감지
-            if (IsPixelPerfectCollision())
+            foreach (var bullet in bullets)
             {
-                gameTimer.Stop();
-                MessageBox.Show("Game Over! Bullet hit the player.");
-                ResetGame();
+                if (IsPixelPerfectCollision(playerImage, new Rectangle(playerPosition, playerSize), bullet.Image, bullet.GetBounds()))
+                {
+                    gameTimer.Stop();
+                    MessageBox.Show("Game Over! Bullet hit the player.");
+                    ResetGame();
+                    return;
+                }
             }
 
             // 화면 다시 그리기
             this.Invalidate();
+        }
+
+        private void AddBullet()
+        {
+            // Bullet 생성
+            Bitmap bulletImage = new Bitmap(Properties.Resources.bullet);
+            bulletImage = new Bitmap(bulletImage, new Size(15, 40)); // 크기 조정
+            Point position = new Point(random.Next(0, this.ClientSize.Width - bulletImage.Width), 0); // 랜덤 위치
+            int speed = random.Next(5, 10); // 랜덤 속도
+
+            bullets.Add(new Bullet(position, bulletImage.Size, speed, bulletImage));
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -82,7 +106,7 @@ namespace test
             {
                 playerPosition.X -= playerSpeed;
             }
-            else if (e.KeyCode == Keys.Right && playerPosition.X < this.ClientSize.Width - playerImage.Width)
+            else if (e.KeyCode == Keys.Right && playerPosition.X < this.ClientSize.Width - playerSize.Width)
             {
                 playerPosition.X += playerSpeed;
             }
@@ -93,8 +117,9 @@ namespace test
 
         private void ResetGame()
         {
-            playerPosition = new Point(175, 500);
-            bulletPosition = new Point(190, 0);
+            playerPosition = new Point(307, 280);
+            bullets.Clear();
+            AddBullet();
             gameTimer.Start();
         }
 
@@ -102,9 +127,14 @@ namespace test
         {
             base.OnPaint(e);
 
-            // Graphics 객체를 사용하여 불투명한 픽셀만 그림
+            // Player 그리기
             DrawImageWithoutTransparency(e.Graphics, playerImage, playerPosition);
-            DrawImageWithoutTransparency(e.Graphics, bulletImage, bulletPosition);
+
+            // Bullet 그리기
+            foreach (var bullet in bullets)
+            {
+                DrawImageWithoutTransparency(e.Graphics, bullet.Image, bullet.Position);
+            }
         }
 
         private void DrawImageWithoutTransparency(Graphics g, Bitmap image, Point position)
@@ -125,32 +155,24 @@ namespace test
             }
         }
 
-        private bool IsPixelPerfectCollision()
+        private bool IsPixelPerfectCollision(Bitmap bmp1, Rectangle rect1, Bitmap bmp2, Rectangle rect2)
         {
-            // 두 이미지 간의 교차 영역(Rectangle) 계산
-            Rectangle rect1 = new Rectangle(playerPosition, playerImage.Size);
-            Rectangle rect2 = new Rectangle(bulletPosition, bulletImage.Size);
             Rectangle intersect = Rectangle.Intersect(rect1, rect2);
 
-            // 교차 영역이 없으면 충돌하지 않음
             if (intersect.IsEmpty) return false;
 
-            // 교차 영역에서 픽셀 단위 비교
             for (int y = intersect.Top; y < intersect.Bottom; y++)
             {
                 for (int x = intersect.Left; x < intersect.Right; x++)
                 {
-                    // 두 이미지의 상대적 좌표 계산
                     int bmp1X = x - rect1.Left;
                     int bmp1Y = y - rect1.Top;
                     int bmp2X = x - rect2.Left;
                     int bmp2Y = y - rect2.Top;
 
-                    // 픽셀 색상 가져오기
-                    Color color1 = playerImage.GetPixel(bmp1X, bmp1Y);
-                    Color color2 = bulletImage.GetPixel(bmp2X, bmp2Y);
+                    Color color1 = bmp1.GetPixel(bmp1X, bmp1Y);
+                    Color color2 = bmp2.GetPixel(bmp2X, bmp2Y);
 
-                    // 투명하지 않은 픽셀끼리 충돌하면 true 반환
                     if (color1.A > 0 && color2.A > 0)
                     {
                         return true;
@@ -160,5 +182,33 @@ namespace test
 
             return false;
         }
+    }
+}
+
+public class Bullet
+{
+    public Point Position { get; set; }
+    public Size Size { get; set; }
+    public int Speed { get; set; }
+    public Bitmap Image { get; set; }
+
+    public Bullet(Point position, Size size, int speed, Bitmap image)
+    {
+        Position = position;
+        Size = size;
+        Speed = speed;
+        Image = image;
+    }
+
+    // Bullet 움직임
+    public void Move()
+    {
+        Position = new Point(Position.X, Position.Y + Speed);
+    }
+
+    // 충돌 영역 반환
+    public Rectangle GetBounds()
+    {
+        return new Rectangle(Position, Size);
     }
 }

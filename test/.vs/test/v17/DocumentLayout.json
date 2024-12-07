@@ -7,7 +7,7 @@
       "RelativeMoniker": "D:0:0:{8E7DEDED-025A-4C11-9E5D-9A7A6BE4C76B}|test\\test.csproj|solutionrelative:test\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8E7DEDED-025A-4C11-9E5D-9A7A6BE4C76B}|test\\test.csproj|c:\\users\\aaaa2\\desktop\\winproject\\test\\test\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{8E7DEDED-025A-4C11-9E5D-9A7A6BE4C76B}|test\\test.csproj|C:\\Users\\aaaa2\\Desktop\\winproject\\test\\test\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{8E7DEDED-025A-4C11-9E5D-9A7A6BE4C76B}|test\\test.csproj|solutionrelative:test\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
@@ -28,7 +28,7 @@
               "RelativeDocumentMoniker": "test\\Form1.cs",
               "ToolTip": "C:\\Users\\aaaa2\\Desktop\\winproject\\test\\test\\Form1.cs",
               "RelativeToolTip": "test\\Form1.cs",
-              "ViewState": "AgIAAE4AAAAAAAAAAAA5wCAAAABCAAAAAAAAAA==",
+              "ViewState": "AgIAALQAAAAAAAAAAAA1wNUAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-07T04:30:18.711Z",
               "EditorCaption": ""
