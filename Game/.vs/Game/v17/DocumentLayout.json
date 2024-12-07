@@ -3,16 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\aaaa2\\Desktop\\winproject\\Game\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B344F9C5-D647-4291-AABA-02C04434E6B9}|Game\\Game.csproj|C:\\Users\\aaaa2\\Desktop\\winproject\\Game\\game\\formeasy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{B344F9C5-D647-4291-AABA-02C04434E6B9}|Game\\Game.csproj|c:\\users\\aaaa2\\desktop\\winproject\\game\\game\\formeasy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B344F9C5-D647-4291-AABA-02C04434E6B9}|Game\\Game.csproj|solutionrelative:game\\formeasy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B344F9C5-D647-4291-AABA-02C04434E6B9}|Game\\Game.csproj|c:\\users\\aaaa2\\desktop\\winproject\\game\\game\\formnormal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B344F9C5-D647-4291-AABA-02C04434E6B9}|Game\\Game.csproj|solutionrelative:game\\formnormal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B344F9C5-D647-4291-AABA-02C04434E6B9}|Game\\Game.csproj|C:\\Users\\aaaa2\\Desktop\\winproject\\Game\\game\\formhard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B344F9C5-D647-4291-AABA-02C04434E6B9}|Game\\Game.csproj|solutionrelative:game\\formhard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B344F9C5-D647-4291-AABA-02C04434E6B9}|Game\\Game.csproj|C:\\Users\\aaaa2\\Desktop\\winproject\\Game\\game\\formeasy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{B344F9C5-D647-4291-AABA-02C04434E6B9}|Game\\Game.csproj|solutionrelative:game\\formeasy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B344F9C5-D647-4291-AABA-02C04434E6B9}|Game\\Game.csproj|c:\\users\\aaaa2\\desktop\\winproject\\game\\game\\formhard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B344F9C5-D647-4291-AABA-02C04434E6B9}|Game\\Game.csproj|solutionrelative:game\\formhard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B344F9C5-D647-4291-AABA-02C04434E6B9}|Game\\Game.csproj|C:\\Users\\aaaa2\\Desktop\\winproject\\Game\\game\\formhard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
@@ -26,8 +30,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FormNORMAL.cs",
+              "DocumentMoniker": "C:\\Users\\aaaa2\\Desktop\\winproject\\Game\\Game\\FormNORMAL.cs",
+              "RelativeDocumentMoniker": "Game\\FormNORMAL.cs",
+              "ToolTip": "C:\\Users\\aaaa2\\Desktop\\winproject\\Game\\Game\\FormNORMAL.cs",
+              "RelativeToolTip": "Game\\FormNORMAL.cs",
+              "ViewState": "AgIAADQAAAAAAAAAAAA2wEoAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-07T05:24:03.401Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 2,
@@ -36,7 +53,7 @@
               "RelativeDocumentMoniker": "Game\\FormHARD.cs",
               "ToolTip": "C:\\Users\\aaaa2\\Desktop\\winproject\\Game\\Game\\FormHARD.cs",
               "RelativeToolTip": "Game\\FormHARD.cs",
-              "ViewState": "AgIAAK4AAAAAAAAAAAAAAL4AAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAEMAAAAAAAAAAAAYwL4AAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-07T04:00:45.385Z",
               "EditorCaption": ""
@@ -49,14 +66,14 @@
               "RelativeDocumentMoniker": "Game\\FormEASY.cs",
               "ToolTip": "C:\\Users\\aaaa2\\Desktop\\winproject\\Game\\Game\\FormEASY.cs",
               "RelativeToolTip": "Game\\FormEASY.cs",
-              "ViewState": "AgIAAKgAAAAAAAAAAAAAAL0AAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAJYAAAAAAAAAAAAAAL0AAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-07T03:55:02.147Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "FormHARD.cs [\uB514\uC790\uC778]",
               "DocumentMoniker": "C:\\Users\\aaaa2\\Desktop\\winproject\\Game\\Game\\FormHARD.cs",
               "RelativeDocumentMoniker": "Game\\FormHARD.cs",
@@ -68,15 +85,14 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "FormEASY.cs [\uB514\uC790\uC778]",
               "DocumentMoniker": "C:\\Users\\aaaa2\\Desktop\\winproject\\Game\\Game\\FormEASY.cs",
               "RelativeDocumentMoniker": "Game\\FormEASY.cs",
               "ToolTip": "C:\\Users\\aaaa2\\Desktop\\winproject\\Game\\Game\\FormEASY.cs [\uB514\uC790\uC778]",
               "RelativeToolTip": "Game\\FormEASY.cs [\uB514\uC790\uC778]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-07T03:54:03.177Z",
-              "EditorCaption": " [\uB514\uC790\uC778]"
+              "WhenOpened": "2024-12-07T03:54:03.177Z"
             }
           ]
         }

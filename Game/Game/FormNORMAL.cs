@@ -72,7 +72,7 @@ namespace Game
             }
 
             // 새로운 Bullet 주기적으로 생성
-            if (random.Next(0, 10) < 2) // 약 20% 확률로 생성
+            if (random.Next(0, 10) < 3) // 약 20% 확률로 생성
             {
                 AddBullet();
             }
